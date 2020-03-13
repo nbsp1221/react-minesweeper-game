@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Settings } from 'components';
 
 const App = () => {
 	return (
 		<MineSweeper>
 			<Title>Minesweeper Game in React</Title>
+			<Settings />
 		</MineSweeper>
 	);
 };
