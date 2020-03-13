@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import Button from 'styled/Button';
+
 const Settings = () => {
 	return (
 		<SettingsStyle>
@@ -17,7 +19,7 @@ const Settings = () => {
 				<div><input type="range" /></div>
 			</div>
 			<div>
-				<button>Start</button>
+				<Button>Start</Button>
 			</div>
 		</SettingsStyle>
 	);
