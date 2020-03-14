@@ -1,33 +1,24 @@
 import React from 'react';
-import styled from 'styled-components';
-
-import Button from 'styled/Button';
-import Slider from 'styled/Slider';
+import { Block, Slider, Button } from 'styled';
 
 const Settings = () => {
 	return (
-		<SettingsStyle>
-			<div>
-				<div>Width: 9</div>
-				<div><Slider min='9' max='30' /></div>
-			</div>
-			<div>
-				<div>Height: 9</div>
-				<div><Slider min='9' max='30' /></div>
-			</div>
-			<div>
-				<div>Mines: 10</div>
-				<div><Slider min='10' max='30' /></div>
-			</div>
-			<div>
-				<Button>Start</Button>
-			</div>
-		</SettingsStyle>
+		<Block mt='30px' textAlign='left'>
+			<Block mb='20px'>
+				<Block mb='5px'>Width: 9</Block>
+				<Slider min='9' max='30' />
+			</Block>
+			<Block mb='20px'>
+				<Block mb='5px'>Height: 9</Block>
+				<Slider min='9' max='30' />
+			</Block>
+			<Block mb='30px'>
+				<Block mb='5px'>Mines: 10</Block>
+				<Slider min='10' max='30' />
+			</Block>
+			<Button>Start</Button>
+		</Block>
 	);
 };
-
-const SettingsStyle = styled.div`
-
-`;
 
 export default Settings;
