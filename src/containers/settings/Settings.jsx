@@ -1,8 +1,12 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { connect } from 'react-redux';
 import { MIN_WIDTH, MIN_HEIGHT, MIN_MINES } from '../../store/constants';
+import { startGame } from '../../store/modules/control';
 import { Settings } from '../../components';
 
-const SettingsContainer = () => {
+const SettingsContainer = ({
+	startGame
+}) => {
 	const [width, setWidth] = useState(MIN_WIDTH);
 	const [height, setHeight] = useState(MIN_HEIGHT);
 	const [mines, setMines] = useState(MIN_MINES);
@@ -13,19 +17,19 @@ const SettingsContainer = () => {
 	}, [width, height])
 
 	const onSliderChangeWidth = useCallback((e) => {
-		setWidth(e.target.value);
+		setWidth(parseInt(e.target.value));
 	}, []);
 
 	const onSliderChangeHeight = useCallback((e) => {
-		setHeight(e.target.value);
+		setHeight(parseInt(e.target.value));
 	}, []);
 
 	const onSliderChangeMines = useCallback((e) => {
-		setMines(e.target.value);
+		setMines(parseInt(e.target.value));
 	}, []);
 
 	const onClickStart = useCallback(() => {
-		console.log('Start');
+		startGame(width, height, mines);
 	}, []);
 
 	return (
@@ -42,4 +46,15 @@ const SettingsContainer = () => {
 	);
 };
 
-export default SettingsContainer;
+const mapStateToProps = (rootState) => ({
+
+});
+
+const mapDispatchToProps = (dispatch) => ({
+	startGame: (width, height, mines) => dispatch(startGame(width, height, mines))
+});
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(SettingsContainer);
