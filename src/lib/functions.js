@@ -11,16 +11,35 @@ export const initBoard = (width, height, mines) => {
 	}
 
 	for (let i = 0; i < height; i++) {
-		console.log(Array(width));
 		const rowData = Array(width).fill(CODES.NOTHING);
 		boardData.push(rowData);
 	}
 
 	for (let i = 0; i < shuffle.length; i++) {
-		const y = Math.floor(shuffle[i] / width);
 		const x = shuffle[i] % width;
+		const y = Math.floor(shuffle[i] / width);
 		boardData[y][x] = CODES.MINE;
 	}
 
 	return boardData;
+};
+
+export const getCellText = (code) => {
+	switch (code) {
+		case CODES.OPENED:
+		case CODES.NOTHING:
+			return '';
+		case CODES.FLAG:
+		case CODES.MINE_FLAG:
+			return '🏁';
+		case CODES.QUESTION:
+		case CODES.MINE_QUESTION:
+			return '❓';
+		case CODES.MINE:
+			return '💣';
+		case CODES.EXPLODED:
+			return '💥';
+		default:
+			return code;
+	}
 };

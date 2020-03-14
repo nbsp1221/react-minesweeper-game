@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import CellContainer from './Cell';
+import { Board } from '../../components';
 
 const BoardContainer = ({
 	width,
@@ -20,11 +21,19 @@ const BoardContainer = ({
 	}, [inGame]);
 
 	return (
-		<div>
-			{inGame && points.map((v, i) => (
-				<CellContainer key={i} x={v.x} y={v.y} />
-			))}
-		</div>
+		<>
+			{inGame && <Board
+				widthCount={width}
+			>
+				{points.map((v, i) => (
+					<CellContainer
+						key={i}
+						x={v.x}
+						y={v.y}
+					/>
+				))}
+			</Board>}
+		</>
 	);
 };
 
@@ -34,11 +43,7 @@ const mapStateToProps = (rootState) => ({
 	inGame: rootState.control.inGame
 });
 
-const mapDispatchToProps = (dispatch) => ({
-	
-});
-
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps
+	null
 )(BoardContainer);

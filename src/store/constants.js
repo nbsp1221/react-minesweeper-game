@@ -1,11 +1,15 @@
-// Config
+// Game Settings
 export const MIN_WIDTH = 9;
 export const MAX_WIDTH = 20;
 export const MIN_HEIGHT = 9;
 export const MAX_HEIGHT = 20;
 export const MIN_MINES = 10;
 
-// States of Cell
+// Design Settings
+export const CELL_SIZE = 42;
+export const CELL_MARGIN = 2;
+
+// Cell States
 export const CODES = {
 	OPENED: 0,
 	NOTHING: -1,

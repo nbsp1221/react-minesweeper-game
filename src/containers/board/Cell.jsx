@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { getCellText } from '../../lib/functions';
+import { Cell } from '../../components';
 
 const CellContainer = ({
 	boardData,
@@ -7,7 +9,7 @@ const CellContainer = ({
 	y
 }) => {
 	return (
-		<div>{boardData[y][x]}</div>
+		<Cell>{getCellText(boardData[y][x])}</Cell>
 	);
 };
 
