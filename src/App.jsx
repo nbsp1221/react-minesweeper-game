@@ -1,6 +1,6 @@
 import React from 'react';
 import { Block } from './styled';
-import { SettingsContainer } from './containers';
+import { SettingsContainer, BoardContainer } from './containers';
 
 const App = () => {
 	return (
@@ -12,6 +12,7 @@ const App = () => {
 		>
 			<h1>Minesweeper Game in React</h1>
 			<SettingsContainer />
+			<BoardContainer />
 		</Block>
 	);
 };
