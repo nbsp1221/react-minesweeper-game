@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import CellContainer from './Cell';
 import { Board } from '../../components';
@@ -20,10 +20,15 @@ const BoardContainer = ({
 		}
 	}, [inGame]);
 
+	const onRightClickBoard = useCallback((e) => {
+		e.preventDefault();
+	}, []);
+
 	return (
 		<>
 			{inGame && <Board
 				widthCount={width}
+				onContextMenu={onRightClickBoard}
 			>
 				{points.map((v, i) => (
 					<CellContainer
