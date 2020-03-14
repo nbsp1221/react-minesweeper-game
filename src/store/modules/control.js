@@ -9,7 +9,8 @@ const initialState = {
 	boardData: [],
 	width: MIN_WIDTH,
 	height: MIN_HEIGHT,
-	mines: MIN_MINES
+	mines: MIN_MINES,
+	inGame: false
 };
 
 export default function(state = initialState, action) {
@@ -19,7 +20,8 @@ export default function(state = initialState, action) {
 				boardData: initBoard(action.width, action.height, action.mines),
 				width: action.width,
 				height: action.height,
-				mines: action.mines
+				mines: action.mines,
+				inGame: true
 			};
 		default:
 			return state;

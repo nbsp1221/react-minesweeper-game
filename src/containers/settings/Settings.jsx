@@ -5,6 +5,7 @@ import { startGame } from '../../store/modules/control';
 import { Settings } from '../../components';
 
 const SettingsContainer = ({
+	inGame,
 	startGame
 }) => {
 	const [width, setWidth] = useState(MIN_WIDTH);
@@ -30,24 +31,26 @@ const SettingsContainer = ({
 
 	const onClickStart = useCallback(() => {
 		startGame(width, height, mines);
-	}, []);
+	}, [width, height, mines]);
 
 	return (
-		<Settings
-			width={width}
-			height={height}
-			mines={mines}
-			maxMines={(width - 1) * (height - 1)}
-			onSliderChangeWidth={onSliderChangeWidth}
-			onSliderChangeHeight={onSliderChangeHeight}
-			onSliderChangeMines={onSliderChangeMines}
-			onClickStart={onClickStart}
-		/>
+		<>
+			{inGame || <Settings
+				width={width}
+				height={height}
+				mines={mines}
+				maxMines={(width - 1) * (height - 1)}
+				onSliderChangeWidth={onSliderChangeWidth}
+				onSliderChangeHeight={onSliderChangeHeight}
+				onSliderChangeMines={onSliderChangeMines}
+				onClickStart={onClickStart}
+			/>}
+		</>
 	);
 };
 
 const mapStateToProps = (rootState) => ({
-
+	inGame: rootState.control.inGame
 });
 
 const mapDispatchToProps = (dispatch) => ({
