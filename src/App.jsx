@@ -1,6 +1,6 @@
 import React from 'react';
-import { Settings } from './components';
 import { Block } from './styled';
+import { SettingsContainer } from './containers';
 
 const App = () => {
 	return (
@@ -11,7 +11,7 @@ const App = () => {
 			padding='30px'
 		>
 			<h1>Minesweeper Game in React</h1>
-			<Settings />
+			<SettingsContainer />
 		</Block>
 	);
 };
