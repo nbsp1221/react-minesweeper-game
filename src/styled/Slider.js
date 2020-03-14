@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-const thumbCss = css`
+const thumbCSS = css`
 	background-color: dimgray;
 	border: none;
 	border-radius: 0;
@@ -17,14 +17,14 @@ const Slider = styled.input.attrs({
 	height: 20px;
 	-webkit-appearance: none;
 	&::-webkit-slider-thumb {
-		${thumbCss};
+		${thumbCSS};
 		-webkit-appearance: none;
 	}
 	&::-moz-range-thumb {
-		${thumbCss};
+		${thumbCSS};
 	}
 	&::-ms-thumb {
-		${thumbCss};
+		${thumbCSS};
 	}
 `;
 

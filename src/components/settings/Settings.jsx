@@ -1,5 +1,5 @@
 import React from 'react';
-import { Block, Slider, Button } from 'styled';
+import { Block, Slider, Button } from '../../styled';
 
 const Settings = () => {
 	return (

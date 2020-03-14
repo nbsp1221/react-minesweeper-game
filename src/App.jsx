@@ -1,11 +1,12 @@
 import React from 'react';
-import { Settings } from 'components';
-import { Block } from 'styled';
+import { Settings } from './components';
+import { Block } from './styled';
 
 const App = () => {
 	return (
 		<Block
 			bgColor='#3498DB'
+			color='white'
 			display='inline-block'
 			padding='30px'
 		>
