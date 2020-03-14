@@ -7,10 +7,6 @@ const ASSETS_PATH = '/assets/scripts';
 module.exports = {
 	mode: process.env.NODE_ENV,
 	resolve: {
-		modules: [
-			path.join(__dirname, 'node_modules'),
-			path.join(__dirname, 'src')
-		],
 		extensions: [
 			'.html',
 			'.css',
