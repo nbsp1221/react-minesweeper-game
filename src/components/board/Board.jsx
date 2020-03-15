@@ -5,7 +5,7 @@ const Board = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	margin: 30px auto 0 auto;
+	margin: 10px auto 0 auto;
 	width: ${({ widthCount }) => widthCount * (CELL_SIZE + CELL_MARGIN * 2)}px;
 `;
 

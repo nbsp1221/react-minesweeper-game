@@ -12,7 +12,7 @@ const Cell = styled.button`
 				return '#F1C40F';
 			case CODES.QUESTION:
 			case CODES.MINE_QUESTION:
-				return 'pink';
+				return '#44D580';
 			default:
 				return 'white';
 		}

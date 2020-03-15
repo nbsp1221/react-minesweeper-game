@@ -34,7 +34,7 @@ export const getCellText = (code) => {
 			return '🚩';
 		case CODES.QUESTION:
 		case CODES.MINE_QUESTION:
-			return '❓';
+			return '❔';
 		case CODES.MINE:
 			return '💣';
 		case CODES.EXPLODED:
