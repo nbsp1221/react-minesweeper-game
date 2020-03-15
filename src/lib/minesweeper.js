@@ -1,11 +1,11 @@
 import { CODES } from '../store/constants';
 
-export const initBoard = (width, height, mines) => {
+export const initBoard = (width, height, mineCount) => {
 	const candidates = Array(width * height).fill().map((v, i) => i);
 	const shuffle = [];
 	const boardData = [];
 
-	while (candidates.length > width * height - mines) {
+	while (candidates.length > width * height - mineCount) {
 		const chosen = candidates.splice(Math.floor(Math.random() * candidates.length), 1)[0];
 		shuffle.push(chosen);
 	}
@@ -63,14 +63,21 @@ export const getNextCellCode = (code) => {
 	}
 };
 
-export const expandOpenedCell = (stateBoardData, x, y) => {
-	const boardData = [...stateBoardData];
-	let openedCellCount = 0;
+export const getFlagIncDec = (code) => {
+	switch (code) {
+		case CODES.NOTHING:
+		case CODES.MINE:
+			return 1;
+		case CODES.FLAG:
+		case CODES.MINE_FLAG:
+			return -1;
+		default:
+			return 0;
+	}
+}
 
-	// Deep copying to change values
-	boardData.forEach((v, i) => {
-		boardData[i] = [...stateBoardData[i]];
-	});
+export const expandOpenedCell = (boardData, x, y) => {
+	let openedCellCount = 0;
 
 	// Define function to get mine count
 	const getMineCount = (x, y) => {

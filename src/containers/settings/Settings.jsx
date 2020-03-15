@@ -10,11 +10,11 @@ const SettingsContainer = ({
 }) => {
 	const [width, setWidth] = useState(MIN_WIDTH);
 	const [height, setHeight] = useState(MIN_HEIGHT);
-	const [mines, setMines] = useState(MIN_MINES);
+	const [mineCount, setMineCount] = useState(MIN_MINES);
 
 	useEffect(() => {
-		const maxMines = (width - 1) * (height - 1);
-		mines > maxMines && setMines(maxMines);
+		const maxMineCount = (width - 1) * (height - 1);
+		mineCount > maxMineCount && setMineCount(maxMineCount);
 	}, [width, height]);
 
 	const onSliderChangeWidth = useCallback((e) => {
@@ -26,19 +26,19 @@ const SettingsContainer = ({
 	}, []);
 
 	const onSliderChangeMines = useCallback((e) => {
-		setMines(parseInt(e.target.value));
+		setMineCount(parseInt(e.target.value));
 	}, []);
 
 	const onClickStart = useCallback(() => {
-		startGame(width, height, mines);
-	}, [width, height, mines]);
+		startGame(width, height, mineCount);
+	}, [width, height, mineCount]);
 
 	return (
 		<>
 			{gameState === 'init' && <Settings
 				width={width}
 				height={height}
-				mines={mines}
+				mines={mineCount}
 				maxMines={(width - 1) * (height - 1)}
 				onSliderChangeWidth={onSliderChangeWidth}
 				onSliderChangeHeight={onSliderChangeHeight}
@@ -54,7 +54,7 @@ const mapStateToProps = (rootState) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	startGame: (width, height, mines) => dispatch(startGame(width, height, mines))
+	startGame: (width, height, mineCount) => dispatch(startGame(width, height, mineCount))
 });
 
 export default connect(
