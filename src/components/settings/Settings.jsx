@@ -1,6 +1,6 @@
 import React from 'react';
 import { MIN_WIDTH, MAX_WIDTH, MIN_HEIGHT, MAX_HEIGHT, MIN_MINES } from '../../store/constants';
-import { Block, Slider, Button } from '../../styled';
+import { Block, Slider, Button } from '../common';
 
 const Settings = ({
 	width,

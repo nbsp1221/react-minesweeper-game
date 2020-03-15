@@ -9,7 +9,7 @@ const thumbCSS = css`
 `;
 
 const Slider = styled.input.attrs({
-	type: 'range',
+	type: 'range'
 })`
 	background-color: skyblue;
 	outline: none;
