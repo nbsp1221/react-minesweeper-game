@@ -17,6 +17,5 @@ export const CODES = {
 	QUESTION: -3,
 	MINE: -4,
 	MINE_FLAG: -5,
-	MINE_QUESTION: -6,
-	EXPLODED: -7
+	MINE_QUESTION: -6
 };

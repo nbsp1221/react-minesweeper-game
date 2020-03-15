@@ -1,6 +1,6 @@
 import React, { useMemo, useCallback } from 'react';
 import { connect } from 'react-redux';
-import { getCellText } from '../../lib/minesweeper';
+import { CODES } from '../../store/constants';
 import { openCell, rotateCellState } from '../../store/modules/control';
 import { Cell } from '../../components';
 
@@ -12,8 +12,25 @@ const CellContainer = ({
 	x,
 	y
 }) => {
+	const getCellText = useCallback((code) => {
+		switch (code) {
+			case CODES.OPENED:
+			case CODES.NOTHING:
+				return '';
+			case CODES.FLAG:
+			case CODES.MINE_FLAG:
+				return gameState === 'win' ? '💣' : '🚩';
+			case CODES.QUESTION:
+			case CODES.MINE_QUESTION:
+				return gameState === 'win' ? '💣' : '❔';
+			case CODES.MINE:
+				return gameState === 'win' ? '💣' : (gameState === 'lose' ? '💥' : '');
+			default:
+				return code;
+		}
+	}, [gameState]);
+
 	const onClickCell = useCallback(() => {
-		console.log(gameState);
 		(gameState === 'ready' || gameState === 'run') && openCell(x, y);
 	}, [gameState]);
 

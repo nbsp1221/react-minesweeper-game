@@ -83,7 +83,6 @@ export default function(state = initialState, action) {
 				if (code === CODES.MINE) {
 					draft.gameState = 'lose';
 					draft.enableTimer = false;
-					draft.boardData[action.y][action.x] = CODES.EXPLODED;
 				}
 				else if (code === CODES.NOTHING) {
 					const expandResult = expandOpenedCell(draft.boardData, action.x, action.y);

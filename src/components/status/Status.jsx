@@ -21,7 +21,7 @@ const Status = ({
 		<Wrapper>
 			<Mine>💣 {leftMineCount} / {mineCount}</Mine>
 			<ButtonWrapper>
-				<RestartButton title="Reset" onClick={onClickRestart}>{resultEmoji}</RestartButton>
+				<RestartButton title="Restart" onClick={onClickRestart}>{resultEmoji}</RestartButton>
 				{enableSettings && <SettingsButton title="Settings" onClick={onClickSettings}>⚙️</SettingsButton>}
 			</ButtonWrapper>
 			<Timer>🕙 {elapsedTime}</Timer>
