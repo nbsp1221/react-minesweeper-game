@@ -17,15 +17,15 @@ const SettingsContainer = ({
 		mineCount > maxMineCount && setMineCount(maxMineCount);
 	}, [width, height]);
 
-	const onSliderChangeWidth = useCallback((e) => {
+	const onChangeWidth = useCallback((e) => {
 		setWidth(parseInt(e.target.value));
 	}, []);
 
-	const onSliderChangeHeight = useCallback((e) => {
+	const onChangeHeight = useCallback((e) => {
 		setHeight(parseInt(e.target.value));
 	}, []);
 
-	const onSliderChangeMines = useCallback((e) => {
+	const onChangeMines = useCallback((e) => {
 		setMineCount(parseInt(e.target.value));
 	}, []);
 
@@ -38,11 +38,11 @@ const SettingsContainer = ({
 			{gameState === 'init' && <Settings
 				width={width}
 				height={height}
-				mines={mineCount}
-				maxMines={(width - 1) * (height - 1)}
-				onSliderChangeWidth={onSliderChangeWidth}
-				onSliderChangeHeight={onSliderChangeHeight}
-				onSliderChangeMines={onSliderChangeMines}
+				mineCount={mineCount}
+				maxMineCount={(width - 1) * (height - 1)}
+				onChangeWidth={onChangeWidth}
+				onChangeHeight={onChangeHeight}
+				onChangeMines={onChangeMines}
 				onClickStart={onClickStart}
 			/>}
 		</>

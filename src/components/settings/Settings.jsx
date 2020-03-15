@@ -5,26 +5,26 @@ import { Block, Slider, Button } from '../common';
 const Settings = ({
 	width,
 	height,
-	mines,
-	maxMines,
-	onSliderChangeWidth,
-	onSliderChangeHeight,
-	onSliderChangeMines,
+	mineCount,
+	maxMineCount,
+	onChangeWidth,
+	onChangeHeight,
+	onChangeMines,
 	onClickStart
 }) => {
 	return (
 		<Block mt='30px' textAlign='left'>
 			<Block mb='20px'>
 				<Block mb='5px'>Width: {width}</Block>
-				<Slider min={MIN_WIDTH} max={MAX_WIDTH} value={width} onChange={onSliderChangeWidth} />
+				<Slider min={MIN_WIDTH} max={MAX_WIDTH} value={width} onChange={onChangeWidth} />
 			</Block>
 			<Block mb='20px'>
 				<Block mb='5px'>Height: {height}</Block>
-				<Slider min={MIN_HEIGHT} max={MAX_HEIGHT} value={height} onChange={onSliderChangeHeight} />
+				<Slider min={MIN_HEIGHT} max={MAX_HEIGHT} value={height} onChange={onChangeHeight} />
 			</Block>
 			<Block mb='30px'>
-				<Block mb='5px'>Mines: {mines}</Block>
-				<Slider min={MIN_MINES} max={maxMines} value={mines} onChange={onSliderChangeMines} />
+				<Block mb='5px'>Mines: {mineCount}</Block>
+				<Slider min={MIN_MINES} max={maxMineCount} value={mineCount} onChange={onChangeMines} />
 			</Block>
 			<Button onClick={onClickStart}>Start</Button>
 		</Block>
