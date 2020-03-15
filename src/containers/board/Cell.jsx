@@ -5,6 +5,7 @@ import { openCell, rotateCellState } from '../../store/modules/control';
 import { Cell } from '../../components';
 
 const CellContainer = ({
+	gameState,
 	boardData,
 	openCell,
 	rotateCellState,
@@ -12,13 +13,14 @@ const CellContainer = ({
 	y
 }) => {
 	const onClickCell = useCallback(() => {
-		openCell(x, y);
-	}, []);
+		console.log(gameState);
+		(gameState === 'ready' || gameState === 'run') && openCell(x, y);
+	}, [gameState]);
 
 	const onRightClickCell = useCallback((e) => {
 		e.preventDefault();
-		rotateCellState(x, y);
-	}, []);
+		(gameState === 'ready' || gameState === 'run') && rotateCellState(x, y);
+	}, [gameState]);
 
 	return useMemo(() => (
 		<Cell
@@ -27,10 +29,11 @@ const CellContainer = ({
 			onClickCell={onClickCell}
 			onRightClickCell={onRightClickCell}
 		/>
-	), [boardData[y][x]])
+	), [gameState, boardData[y][x]])
 };
 
 const mapStateToProps = (rootState) => ({
+	gameState: rootState.control.gameState,
 	boardData: rootState.control.boardData
 });
 

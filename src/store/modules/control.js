@@ -30,7 +30,7 @@ export const rotateCellState = (x, y) => ({ type: ROTATE_CELL_STATE, x, y });
 
 const initialState = {
 	enableSettings: false,
-	gameState: 'init',
+	gameState: 'ready',
 	enableTimer: false,
 	elapsedTime: 0,
 	boardData: initBoard(MIN_WIDTH, MIN_HEIGHT, MIN_MINES),
