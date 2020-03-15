@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { getCellText } from '../../lib/minesweeper';
 import { openCell, rotateCellState } from '../../store/modules/control';
@@ -20,14 +20,14 @@ const CellContainer = ({
 		rotateCellState(x, y);
 	}, []);
 
-	return (
+	return useMemo(() => (
 		<Cell
 			cellCode={boardData[y][x]}
 			cellText={getCellText(boardData[y][x])}
 			onClickCell={onClickCell}
 			onRightClickCell={onRightClickCell}
 		/>
-	);
+	), [boardData[y][x]])
 };
 
 const mapStateToProps = (rootState) => ({
