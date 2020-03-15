@@ -13,3 +13,16 @@
 	margin-bottom: 50px;
 	text-align: center;
 }
+.github-link {
+	font-size: 14px;
+	margin-bottom: 50px;
+	text-align: center;
+}
+.github-link > a {
+	color: #007BFF;
+	text-decoration: none;
+}
+.github-link > a:hover {
+	color: #3396FF;
+	text-decoration: underline;
+}
