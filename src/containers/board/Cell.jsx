@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
-import { CODES } from '../../store/constants';
-import { getCellText } from '../../lib/functions';
+import { getCellText } from '../../lib/minesweeper';
 import { rightClickCell } from '../../store/modules/control';
 import { Cell } from '../../components';
 

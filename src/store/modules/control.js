@@ -1,6 +1,6 @@
 import produce from 'immer';
 import { MIN_WIDTH, MIN_HEIGHT, MIN_MINES } from '../constants';
-import { initBoard, getNextCellCode } from '../../lib/functions';
+import { initBoard, getNextCellCode } from '../../lib/minesweeper';
 
 const START_GAME = 'control/START_GAME';
 const RIGHT_CLICK_CELL = 'control/RIGHT_CLICK_CELL';
