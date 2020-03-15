@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { MIN_WIDTH, MIN_HEIGHT, MIN_MINES } from '../../store/constants';
-import { startGame } from '../../store/modules/control';
+import { hideSettings, setGame, restartGame } from '../../store/modules/control';
 import { Settings } from '../../components';
 
 const SettingsContainer = ({
-	gameState,
-	startGame
+	enableSettings,
+	hideSettings,
+	setGame,
+	restartGame
 }) => {
 	const [width, setWidth] = useState(MIN_WIDTH);
 	const [height, setHeight] = useState(MIN_HEIGHT);
@@ -29,13 +31,16 @@ const SettingsContainer = ({
 		setMineCount(parseInt(e.target.value));
 	}, []);
 
-	const onClickStart = useCallback(() => {
-		startGame(width, height, mineCount);
+	const onClickSet = useCallback(() => {
+		setGame(width, height, mineCount);
+		restartGame();
+		hideSettings();
 	}, [width, height, mineCount]);
 
 	return (
 		<>
-			{gameState === 'init' && <Settings
+			{enableSettings &&
+			<Settings
 				width={width}
 				height={height}
 				mineCount={mineCount}
@@ -43,18 +48,20 @@ const SettingsContainer = ({
 				onChangeWidth={onChangeWidth}
 				onChangeHeight={onChangeHeight}
 				onChangeMines={onChangeMines}
-				onClickStart={onClickStart}
+				onClickSet={onClickSet}
 			/>}
 		</>
 	);
 };
 
 const mapStateToProps = (rootState) => ({
-	gameState: rootState.control.gameState
+	enableSettings: rootState.control.enableSettings
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	startGame: (width, height, mineCount) => dispatch(startGame(width, height, mineCount))
+	hideSettings: () => dispatch(hideSettings()),
+	setGame: (width, height, mineCount) => dispatch(setGame(width, height, mineCount)),
+	restartGame: () => dispatch(restartGame())
 });
 
 export default connect(

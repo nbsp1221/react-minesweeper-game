@@ -1,21 +1,22 @@
 import React from 'react';
-import { Block } from './components/common';
-import { SettingsContainer, StatusContainer, BoardContainer } from './containers';
+import { 
+	SettingsContainer,
+	StatusContainer,
+	BoardContainer
+} from './containers';
+import {
+	Wrapper,
+	Title
+} from './AppStyle';
 
 const App = () => {
 	return (
-		<Block
-			bgColor='#3498DB'
-			borderRadius='5px'
-			color='white'
-			display='inline-block'
-			p='30px'
-		>
-			<h1>Minesweeper Game in React</h1>
+		<Wrapper>
+			<Title>Minesweeper Game in React</Title>
 			<SettingsContainer />
 			<StatusContainer />
 			<BoardContainer />
-		</Block>
+		</Wrapper>
 	);
 };
 

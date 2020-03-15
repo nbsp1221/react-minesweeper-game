@@ -1,16 +1,29 @@
 import React from 'react';
-import { Wrapper, Mine, ControlButton, Timer } from './StatusStyle';
+import {
+	Wrapper,
+	Mine,
+	ButtonWrapper,
+	RestartButton,
+	SettingsButton,
+	Timer
+} from './StatusStyle';
 
 const Status = ({
 	leftMineCount,
 	mineCount,
 	resultEmoji,
-	elapsedTime
+	enableSettings,
+	elapsedTime,
+	onClickRestart,
+	onClickSettings
 }) => {
 	return (
 		<Wrapper>
 			<Mine>💣 {leftMineCount} / {mineCount}</Mine>
-			<ControlButton title="Restart">{resultEmoji}</ControlButton>
+			<ButtonWrapper>
+				<RestartButton title="Reset" onClick={onClickRestart}>{resultEmoji}</RestartButton>
+				{enableSettings && <SettingsButton title="Settings" onClick={onClickSettings}>⚙️</SettingsButton>}
+			</ButtonWrapper>
 			<Timer>🕙 {elapsedTime}</Timer>
 		</Wrapper>
 	);

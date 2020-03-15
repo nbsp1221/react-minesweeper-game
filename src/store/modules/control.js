@@ -12,21 +12,28 @@ import {
 	getFlagIncDec
 } from '../../lib/minesweeper';
 
-const START_GAME = 'control/START_GAME';
+const SHOW_SETTINGS = 'control/SHOW_SETTINGS';
+const HIDE_SETTINGS = 'control/HIDE_SETTINGS';
+const SET_GAME = 'control/SET_GAME';
+const RESTART_GAME = 'control/RESTART_GAME';
 const UPDATE_ELAPSED_TIME = 'control/UPDATE_ELAPSED_TIME';
 const OPEN_CELL = 'control/OPEN_CELL';
 const ROTATE_CELL_STATE = 'control/ROTATE_CELL_STATE';
 
-export const startGame = (width, height, mineCount) => ({ type: START_GAME, width, height, mineCount });
+export const showSettings = () => ({ type: SHOW_SETTINGS });
+export const hideSettings = () => ({ type: HIDE_SETTINGS });
+export const setGame = (width, height, mineCount) => ({ type: SET_GAME, width, height, mineCount });
+export const restartGame = () => ({ type: RESTART_GAME })
 export const updateElapsedTime = () => ({ type: UPDATE_ELAPSED_TIME });
 export const openCell = (x, y) => ({ type: OPEN_CELL, x, y });
 export const rotateCellState = (x, y) => ({ type: ROTATE_CELL_STATE, x, y });
 
 const initialState = {
+	enableSettings: false,
 	gameState: 'init',
 	enableTimer: false,
 	elapsedTime: 0,
-	boardData: [],
+	boardData: initBoard(MIN_WIDTH, MIN_HEIGHT, MIN_MINES),
 	width: MIN_WIDTH,
 	height: MIN_HEIGHT,
 	mineCount: MIN_MINES,
@@ -36,15 +43,26 @@ const initialState = {
 
 export default function(state = initialState, action) {
 	switch (action.type) {
-		case START_GAME:
+		case SHOW_SETTINGS:
 			return produce(state, draft => {
-				draft.gameState = 'start';
-				draft.enableTimer = false;
-				draft.elapsedTime = 0;
-				draft.boardData = initBoard(action.width, action.height, action.mineCount);
+				draft.enableSettings = true;
+			});
+		case HIDE_SETTINGS:
+			return produce(state, draft => {
+				draft.enableSettings = false;
+			});
+		case SET_GAME:
+			return produce(state, draft => {
 				draft.width = action.width;
 				draft.height = action.height;
 				draft.mineCount = action.mineCount;
+			});
+		case RESTART_GAME:
+			return produce(state, draft => {
+				draft.gameState = 'ready';
+				draft.enableTimer = false;
+				draft.elapsedTime = 0;
+				draft.boardData = initBoard(state.width, state.height, state.mineCount);
 				draft.flagCount = 0;
 				draft.openedCellCount = 0;
 			});
@@ -55,6 +73,7 @@ export default function(state = initialState, action) {
 		case OPEN_CELL:
 			return produce(state, draft => {
 				const code = state.boardData[action.y][action.x];
+				draft.gameState = 'run';
 
 				// Start timer if click on cell
 				if (!state.enableTimer) {

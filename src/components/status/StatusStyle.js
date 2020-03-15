@@ -11,9 +11,17 @@ export const Mine = styled.div`
 	text-align: left;
 `;
 
-export const ControlButton = styled.div`
-	cursor: pointer;
+export const ButtonWrapper = styled.div`
+	flex: 1;
 	text-align: center;
+`;
+
+export const RestartButton = styled.span`
+	cursor: pointer;
+`;
+
+export const SettingsButton = styled.span`
+	cursor: pointer;
 `;
 
 export const Timer = styled.div`

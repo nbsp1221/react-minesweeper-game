@@ -1,14 +1,17 @@
 import React, { useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
-import { updateElapsedTime } from '../../store/modules/control';
+import { showSettings, restartGame, updateElapsedTime } from '../../store/modules/control';
 import { Status } from '../../components';
 
 const StatusContainer = ({
+	enableSettings,
 	gameState,
 	enableTimer,
 	elapsedTime,
 	mineCount,
 	flagCount,
+	showSettings,
+	restartGame,
 	updateElapsedTime
 }) => {
 	useEffect(() => {
@@ -34,22 +37,34 @@ const StatusContainer = ({
 			default:
 				return '😄';
 		}
-	}, [gameState])
+	}, [gameState]);
+
+	const onClickRestart = useCallback(() => {
+		restartGame();
+	}, []);
+
+	const onClickSettings = useCallback(() => {
+		showSettings();
+	}, []);
 
 	return (
 		<>
-			{gameState !== 'init' &&
+			{!enableSettings &&
 			<Status
 				leftMineCount={mineCount - flagCount}
 				mineCount={mineCount}
 				resultEmoji={getResultEmoji(gameState)}
+				enableSettings={gameState !== 'run'}
 				elapsedTime={elapsedTime.toString().padStart(3, '0')}
+				onClickRestart={onClickRestart}
+				onClickSettings={onClickSettings}
 			/>}
 		</>
 	);
 };
 
 const mapStateToProps = (rootState) => ({
+	enableSettings: rootState.control.enableSettings,
 	gameState: rootState.control.gameState,
 	enableTimer: rootState.control.enableTimer,
 	elapsedTime: rootState.control.elapsedTime,
@@ -58,6 +73,8 @@ const mapStateToProps = (rootState) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+	showSettings: () => dispatch(showSettings()),
+	restartGame: () => dispatch(restartGame()),
 	updateElapsedTime: () => dispatch(updateElapsedTime())
 });
 

@@ -1,12 +1,21 @@
-import styled from 'styled-components';
-import { CELL_SIZE, CELL_MARGIN } from '../../store/constants';
+import React from 'react';
+import { CellContainer } from '../../containers';
+import {
+	Wrapper
+} from './BoardStyle';
 
-const Board = styled.div`
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	margin: 10px auto 0 auto;
-	width: ${({ widthCount }) => widthCount * (CELL_SIZE + CELL_MARGIN * 2)}px;
-`;
+const Board = ({
+	width,
+	height,
+	onRightClickBoard
+}) => {
+	return (
+		<Wrapper widthSize={width} onContextMenu={onRightClickBoard}>
+			{Array(width * height).fill().map((v, i) => 
+				<CellContainer key={i} x={i % width} y={Math.floor(i / width)} />
+			)}
+		</Wrapper>
+	);
+};
 
 export default Board;

@@ -22,12 +22,11 @@ const CellContainer = ({
 
 	return (
 		<Cell
-			code={boardData[y][x]}
-			onClick={onClickCell}
-			onContextMenu={onRightClickCell}
-		>
-			{getCellText(boardData[y][x])}
-		</Cell>
+			cellCode={boardData[y][x]}
+			cellText={getCellText(boardData[y][x])}
+			onClickCell={onClickCell}
+			onRightClickCell={onRightClickCell}
+		/>
 	);
 };
 
