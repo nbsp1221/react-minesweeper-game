@@ -4,21 +4,21 @@ import CellContainer from './Cell';
 import { Board } from '../../components';
 
 const BoardContainer = ({
+	gameState,
 	width,
-	height,
-	inGame
+	height
 }) => {
 	const [points, setPoints] = useState([]);
 
 	useEffect(() => {
-		if (inGame) {
+		if (gameState === 'start') {
 			const makedPoints = Array(width * height).fill().map((v, i) => ({
 				x: i % width,
 				y: Math.floor(i / width)
 			}));
 			setPoints(makedPoints);
 		}
-	}, [inGame]);
+	}, [gameState]);
 
 	const onRightClickBoard = useCallback((e) => {
 		e.preventDefault();
@@ -26,7 +26,7 @@ const BoardContainer = ({
 
 	return (
 		<>
-			{inGame && <Board
+			{gameState === 'start' && <Board
 				widthCount={width}
 				onContextMenu={onRightClickBoard}
 			>
@@ -43,9 +43,9 @@ const BoardContainer = ({
 };
 
 const mapStateToProps = (rootState) => ({
+	gameState: rootState.control.gameState,
 	width: rootState.control.width,
-	height: rootState.control.height,
-	inGame: rootState.control.inGame
+	height: rootState.control.height
 });
 
 export default connect(

@@ -5,7 +5,7 @@ import { startGame } from '../../store/modules/control';
 import { Settings } from '../../components';
 
 const SettingsContainer = ({
-	inGame,
+	gameState,
 	startGame
 }) => {
 	const [width, setWidth] = useState(MIN_WIDTH);
@@ -15,7 +15,7 @@ const SettingsContainer = ({
 	useEffect(() => {
 		const maxMines = (width - 1) * (height - 1);
 		mines > maxMines && setMines(maxMines);
-	}, [width, height])
+	}, [width, height]);
 
 	const onSliderChangeWidth = useCallback((e) => {
 		setWidth(parseInt(e.target.value));
@@ -35,7 +35,7 @@ const SettingsContainer = ({
 
 	return (
 		<>
-			{inGame || <Settings
+			{gameState === 'init' && <Settings
 				width={width}
 				height={height}
 				mines={mines}
@@ -50,7 +50,7 @@ const SettingsContainer = ({
 };
 
 const mapStateToProps = (rootState) => ({
-	inGame: rootState.control.inGame
+	gameState: rootState.control.gameState
 });
 
 const mapDispatchToProps = (dispatch) => ({

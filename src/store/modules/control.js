@@ -11,28 +11,29 @@ export const openCell = (x, y) => ({ type: OPEN_CELL, x, y });
 export const rotateCellState = (x, y) => ({ type: ROTATE_CELL_STATE, x, y });
 
 const initialState = {
+	gameState: 'init',
 	boardData: [],
 	width: MIN_WIDTH,
 	height: MIN_HEIGHT,
-	mines: MIN_MINES,
-	inGame: false
+	mines: MIN_MINES
 };
 
 export default function(state = initialState, action) {
 	switch (action.type) {
 		case START_GAME:
 			return produce(state, draft => {
+				draft.gameState = 'start';
 				draft.boardData = initBoard(action.width, action.height, action.mines);
 				draft.width = action.width;
 				draft.height = action.height;
 				draft.mines = action.mines;
-				draft.inGame = true;
 			});
 		case OPEN_CELL:
 			return produce(state, draft => {
 				const code = state.boardData[action.y][action.x];
 
 				if (code === CODES.MINE) {
+					draft.gameState = 'lose';
 					draft.boardData[action.y][action.x] = CODES.EXPLODED;
 				}
 				else if (code === CODES.NOTHING) {
