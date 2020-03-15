@@ -1,12 +1,14 @@
 import produce from 'immer';
-import { MIN_WIDTH, MIN_HEIGHT, MIN_MINES } from '../constants';
-import { initBoard, getNextCellCode } from '../../lib/minesweeper';
+import { MIN_WIDTH, MIN_HEIGHT, MIN_MINES, CODES } from '../constants';
+import { initBoard, expandOpenedCell, getNextCellCode } from '../../lib/minesweeper';
 
 const START_GAME = 'control/START_GAME';
+const OPEN_CELL = 'control/OPEN_CELL';
 const ROTATE_CELL_STATE = 'control/ROTATE_CELL_STATE';
 
 export const startGame = (width, height, mines) => ({ type: START_GAME, width, height, mines });
-export const rotateCellState = (x, y, code) => ({ type: ROTATE_CELL_STATE, x, y, code });
+export const openCell = (x, y) => ({ type: OPEN_CELL, x, y });
+export const rotateCellState = (x, y) => ({ type: ROTATE_CELL_STATE, x, y });
 
 const initialState = {
 	boardData: [],
@@ -26,9 +28,26 @@ export default function(state = initialState, action) {
 				draft.mines = action.mines;
 				draft.inGame = true;
 			});
+		case OPEN_CELL:
+			return produce(state, draft => {
+				const code = state.boardData[action.y][action.x];
+
+				if (code === CODES.MINE) {
+					draft.boardData[action.y][action.x] = CODES.EXPLODED;
+				}
+				else if (code === CODES.NOTHING) {
+					const expandResult = expandOpenedCell(state.boardData, action.x, action.y);
+
+					draft.boardData = expandResult.boardData;
+				}
+			});
 		case ROTATE_CELL_STATE:
 			return produce(state, draft => {
-				draft.boardData[action.y][action.x] = getNextCellCode(action.code);
+				const code = state.boardData[action.y][action.x];
+
+				if (code !== CODES.OPENED) {
+					draft.boardData[action.y][action.x] = getNextCellCode(code);
+				}
 			});
 		default:
 			return state;
