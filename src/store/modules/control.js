@@ -3,10 +3,10 @@ import { MIN_WIDTH, MIN_HEIGHT, MIN_MINES } from '../constants';
 import { initBoard, getNextCellCode } from '../../lib/minesweeper';
 
 const START_GAME = 'control/START_GAME';
-const RIGHT_CLICK_CELL = 'control/RIGHT_CLICK_CELL';
+const ROTATE_CELL_STATE = 'control/ROTATE_CELL_STATE';
 
 export const startGame = (width, height, mines) => ({ type: START_GAME, width, height, mines });
-export const rightClickCell = (x, y, code) => ({ type: RIGHT_CLICK_CELL, x, y, code });
+export const rotateCellState = (x, y, code) => ({ type: ROTATE_CELL_STATE, x, y, code });
 
 const initialState = {
 	boardData: [],
@@ -26,7 +26,7 @@ export default function(state = initialState, action) {
 				draft.mines = action.mines;
 				draft.inGame = true;
 			});
-		case RIGHT_CLICK_CELL:
+		case ROTATE_CELL_STATE:
 			return produce(state, draft => {
 				draft.boardData[action.y][action.x] = getNextCellCode(action.code);
 			});
