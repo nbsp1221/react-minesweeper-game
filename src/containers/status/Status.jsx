@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { updateElapsedTime } from '../../store/modules/control';
+import { Status } from '../../components';
 
 const StatusContainer = ({
 	gameState,
@@ -24,14 +25,26 @@ const StatusContainer = ({
 		};
 	}, [enableTimer]);
 
+	const getResultEmoji = useCallback((gameState) => {
+		switch (gameState) {
+			case 'win':
+				return '😎';
+			case 'lose':
+				return '😢';
+			default:
+				return '😄';
+		}
+	}, [gameState])
+
 	return (
 		<>
 			{gameState !== 'init' &&
-			<div>
-				<div>Left mines: {mineCount - flagCount} / {mineCount}</div>
-				<div>Timer: {elapsedTime}</div>
-				<div>Result: {gameState}</div>
-			</div>}
+			<Status
+				leftMineCount={mineCount - flagCount}
+				mineCount={mineCount}
+				resultEmoji={getResultEmoji(gameState)}
+				elapsedTime={elapsedTime.toString().padStart(3, '0')}
+			/>}
 		</>
 	);
 };
