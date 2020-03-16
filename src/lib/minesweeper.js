@@ -24,26 +24,6 @@ export const initBoard = (width, height, mineCount) => {
 	return boardData;
 };
 
-export const getCellText = (code) => {
-	switch (code) {
-		case CODES.OPENED:
-		case CODES.NOTHING:
-			return '';
-		case CODES.FLAG:
-		case CODES.MINE_FLAG:
-			return '🚩';
-		case CODES.QUESTION:
-		case CODES.MINE_QUESTION:
-			return '❔';
-		case CODES.MINE:
-			return '💣';
-		case CODES.EXPLODED:
-			return '💥';
-		default:
-			return code;
-	}
-};
-
 export const getNextCellCode = (code) => {
 	switch (code) {
 		case CODES.NOTHING:
