@@ -15,6 +15,12 @@ git clone https://github.com/nbsp1221/react-minesweeper-game.git
 cd react-minesweeper-game
 ```
 
+Install npm packages.
+
+```shell
+npm install
+```
+
 ### Run
 
 ```shell
