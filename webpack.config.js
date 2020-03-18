@@ -30,7 +30,7 @@ module.exports = {
 				]
 			},
 			{
-				test: /\.jsx$/,
+				test: /\.jsx?$/,
 				loader: 'babel-loader',
 				options: {
 					presets: [
