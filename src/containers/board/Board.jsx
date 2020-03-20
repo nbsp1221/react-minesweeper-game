@@ -1,12 +1,12 @@
 import React, { useCallback } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Board } from '../../components';
 
-const BoardContainer = ({
-	enableSettings,
-	width,
-	height
-}) => {
+const BoardContainer = () => {
+	const enableSettings = useSelector(rootState => rootState.control.enableSettings);
+	const width = useSelector(rootState => rootState.control.width);
+	const height = useSelector(rootState => rootState.control.height);
+
 	const onRightClickBoard = useCallback((e) => {
 		e.preventDefault();
 	}, []);
@@ -23,14 +23,4 @@ const BoardContainer = ({
 	);
 };
 
-const mapStateToProps = (rootState) => ({
-	enableSettings: rootState.control.enableSettings,
-	gameState: rootState.control.gameState,
-	width: rootState.control.width,
-	height: rootState.control.height
-});
-
-export default connect(
-	mapStateToProps,
-	null
-)(BoardContainer);
+export default BoardContainer;

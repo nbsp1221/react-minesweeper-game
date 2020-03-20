@@ -3,8 +3,9 @@ import {
 	MIN_WIDTH,
 	MIN_HEIGHT,
 	MIN_MINES,
+	GAME,
 	CODES
-} from '../constants';
+} from '../../constants';
 import {
 	initBoard,
 	expandOpenedCell,
@@ -23,14 +24,14 @@ const ROTATE_CELL_STATE = 'control/ROTATE_CELL_STATE';
 export const showSettings = () => ({ type: SHOW_SETTINGS });
 export const hideSettings = () => ({ type: HIDE_SETTINGS });
 export const setGame = (width, height, mineCount) => ({ type: SET_GAME, width, height, mineCount });
-export const restartGame = () => ({ type: RESTART_GAME })
+export const restartGame = () => ({ type: RESTART_GAME });
 export const updateElapsedTime = () => ({ type: UPDATE_ELAPSED_TIME });
 export const openCell = (x, y) => ({ type: OPEN_CELL, x, y });
 export const rotateCellState = (x, y) => ({ type: ROTATE_CELL_STATE, x, y });
 
 const initialState = {
 	enableSettings: false,
-	gameState: 'ready',
+	gameState: GAME.READY,
 	enableTimer: false,
 	elapsedTime: 0,
 	boardData: initBoard(MIN_WIDTH, MIN_HEIGHT, MIN_MINES),
@@ -59,7 +60,7 @@ export default function(state = initialState, action) {
 			});
 		case RESTART_GAME:
 			return produce(state, draft => {
-				draft.gameState = 'ready';
+				draft.gameState = GAME.READY;
 				draft.enableTimer = false;
 				draft.elapsedTime = 0;
 				draft.boardData = initBoard(state.width, state.height, state.mineCount);
@@ -73,7 +74,7 @@ export default function(state = initialState, action) {
 		case OPEN_CELL:
 			return produce(state, draft => {
 				const code = state.boardData[action.y][action.x];
-				draft.gameState = 'run';
+				draft.gameState = GAME.RUN;
 
 				// Start timer if click on cell
 				if (!state.enableTimer) {
@@ -81,7 +82,7 @@ export default function(state = initialState, action) {
 				}
 
 				if (code === CODES.MINE) {
-					draft.gameState = 'lose';
+					draft.gameState = GAME.LOSE;
 					draft.enableTimer = false;
 				}
 				else if (code === CODES.NOTHING) {
@@ -91,7 +92,7 @@ export default function(state = initialState, action) {
 
 					// Win
 					if (state.width * state.height - state.mineCount === draft.openedCellCount) {
-						draft.gameState = 'win';
+						draft.gameState = GAME.WIN;
 						draft.enableTimer = false;
 					}
 				}

@@ -1,23 +1,24 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { connect } from 'react-redux';
-import { MIN_WIDTH, MIN_HEIGHT, MIN_MINES } from '../../store/constants';
+import { useDispatch, useSelector } from 'react-redux';
+import { MIN_WIDTH, MIN_HEIGHT, MIN_MINES } from '../../constants';
 import { hideSettings, setGame, restartGame } from '../../store/modules/control';
 import { Settings } from '../../components';
 
-const SettingsContainer = ({
-	enableSettings,
-	hideSettings,
-	setGame,
-	restartGame
-}) => {
+const SettingsContainer = () => {
+	const dispatch = useDispatch();
+	const enableSettings = useSelector(rootState => rootState.control.enableSettings);
+
 	const [width, setWidth] = useState(MIN_WIDTH);
 	const [height, setHeight] = useState(MIN_HEIGHT);
 	const [mineCount, setMineCount] = useState(MIN_MINES);
 
 	useEffect(() => {
 		const maxMineCount = (width - 1) * (height - 1);
-		mineCount > maxMineCount && setMineCount(maxMineCount);
-	}, [width, height]);
+
+		if (mineCount > maxMineCount) {
+			setMineCount(maxMineCount)
+		}
+	}, [width, height, mineCount]);
 
 	const onChangeWidth = useCallback((e) => {
 		setWidth(parseInt(e.target.value));
@@ -32,9 +33,9 @@ const SettingsContainer = ({
 	}, []);
 
 	const onClickSet = useCallback(() => {
-		setGame(width, height, mineCount);
-		restartGame();
-		hideSettings();
+		dispatch(setGame(width, height, mineCount));
+		dispatch(restartGame());
+		dispatch(hideSettings());
 	}, [width, height, mineCount]);
 
 	return (
@@ -54,17 +55,4 @@ const SettingsContainer = ({
 	);
 };
 
-const mapStateToProps = (rootState) => ({
-	enableSettings: rootState.control.enableSettings
-});
-
-const mapDispatchToProps = (dispatch) => ({
-	hideSettings: () => dispatch(hideSettings()),
-	setGame: (width, height, mineCount) => dispatch(setGame(width, height, mineCount)),
-	restartGame: () => dispatch(restartGame())
-});
-
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(SettingsContainer);
+export default SettingsContainer;

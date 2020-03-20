@@ -9,6 +9,14 @@ export const MIN_MINES = 10;
 export const CELL_SIZE = 42;
 export const CELL_MARGIN = 2;
 
+// Game States
+export const GAME = {
+	READY: 'ready',
+	RUN: 'run',
+	WIN: 'win',
+	LOSE: 'lose'
+};
+
 // Cell States
 export const CODES = {
 	OPENED: 0,

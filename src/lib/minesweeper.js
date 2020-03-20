@@ -1,4 +1,4 @@
-import { CODES } from '../store/constants';
+import { CODES } from '../constants';
 
 export const initBoard = (width, height, mineCount) => {
 	const candidates = Array(width * height).fill().map((v, i) => i);
@@ -54,7 +54,7 @@ export const getFlagIncDec = (code) => {
 		default:
 			return 0;
 	}
-}
+};
 
 export const expandOpenedCell = (boardData, x, y) => {
 	let openedCellCount = 0;

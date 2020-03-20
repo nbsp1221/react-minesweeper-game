@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { CELL_SIZE, CELL_MARGIN, CODES } from '../../store/constants';
+import { CELL_SIZE, CELL_MARGIN, CODES } from '../../constants';
 
 export const Button = styled.button`
 	background-color: ${({ cellCode }) => {

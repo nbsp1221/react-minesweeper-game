@@ -1,65 +1,80 @@
-import React, { useMemo, useCallback } from 'react';
-import { connect } from 'react-redux';
-import { CODES } from '../../store/constants';
+import React, { memo, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { GAME, CODES } from '../../constants';
 import { openCell, rotateCellState } from '../../store/modules/control';
 import { Cell } from '../../components';
 
 const CellContainer = ({
-	gameState,
-	boardData,
-	openCell,
-	rotateCellState,
 	x,
 	y
 }) => {
+	const dispatch = useDispatch();
+	const gameState = useSelector(rootState => rootState.control.gameState);
+	const cellCode = useSelector(rootState => rootState.control.boardData[y][x]);
+
 	const getCellText = useCallback((code) => {
 		switch (code) {
 			case CODES.OPENED:
 			case CODES.NOTHING:
 				return '';
 			case CODES.FLAG:
+				return '🚩'
 			case CODES.MINE_FLAG:
-				return gameState === 'win' ? '💣' : '🚩';
+				switch (gameState) {
+					case GAME.WIN:
+						return '💣';
+					case GAME.LOSE:
+						return '💥';
+					default:
+						return '🚩';
+				}
 			case CODES.QUESTION:
+				return '❔'
 			case CODES.MINE_QUESTION:
-				return gameState === 'win' ? '💣' : '❔';
+				switch (gameState) {
+					case GAME.WIN:
+						return '💣';
+					case GAME.LOSE:
+						return '💥';
+					default:
+						return '❔';
+				}
 			case CODES.MINE:
-				return gameState === 'win' ? '💣' : (gameState === 'lose' ? '💥' : '');
+				switch (gameState) {
+					case GAME.WIN:
+						return '💣';
+					case GAME.LOSE:
+						return '💥';
+					default:
+						return '';
+				}
 			default:
 				return code;
 		}
 	}, [gameState]);
 
 	const onClickCell = useCallback(() => {
-		(gameState === 'ready' || gameState === 'run') && openCell(x, y);
+		if (gameState === GAME.READY || gameState === GAME.RUN) {
+			dispatch(openCell(x, y));
+		}
 	}, [gameState]);
 
 	const onRightClickCell = useCallback((e) => {
 		e.preventDefault();
-		(gameState === 'ready' || gameState === 'run') && rotateCellState(x, y);
+
+		if (gameState === GAME.READY || gameState === GAME.RUN) {
+			dispatch(rotateCellState(x, y))
+		}
 	}, [gameState]);
 
-	return useMemo(() => (
+	return (
 		<Cell
-			cellCode={boardData[y][x]}
-			cellText={getCellText(boardData[y][x])}
+			cellCode={cellCode}
+			cellText={getCellText(cellCode)}
 			onClickCell={onClickCell}
 			onRightClickCell={onRightClickCell}
 		/>
-	), [gameState, boardData[y][x]])
+	);
 };
 
-const mapStateToProps = (rootState) => ({
-	gameState: rootState.control.gameState,
-	boardData: rootState.control.boardData
-});
-
-const mapDispatchToProps = (dispatch) => ({
-	openCell: (x, y) => dispatch(openCell(x, y)),
-	rotateCellState: (x, y) => dispatch(rotateCellState(x, y))
-});
-
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(CellContainer);
+export default memo(CellContainer);

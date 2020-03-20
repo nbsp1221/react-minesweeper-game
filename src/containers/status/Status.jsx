@@ -1,25 +1,24 @@
 import React, { useEffect, useCallback } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { GAME } from '../../constants';
 import { showSettings, restartGame, updateElapsedTime } from '../../store/modules/control';
 import { Status } from '../../components';
 
-const StatusContainer = ({
-	enableSettings,
-	gameState,
-	enableTimer,
-	elapsedTime,
-	mineCount,
-	flagCount,
-	showSettings,
-	restartGame,
-	updateElapsedTime
-}) => {
+const StatusContainer = () => {
+	const dispatch = useDispatch();
+	const enableSettings = useSelector(rootState => rootState.control.enableSettings);
+	const gameState = useSelector(rootState => rootState.control.gameState);
+	const enableTimer = useSelector(rootState => rootState.control.enableTimer);
+	const elapsedTime = useSelector(rootState => rootState.control.elapsedTime);
+	const mineCount = useSelector(rootState => rootState.control.mineCount);
+	const flagCount = useSelector(rootState => rootState.control.flagCount);
+
 	useEffect(() => {
 		let gameTimer;
 
 		if (enableTimer) {
 			gameTimer = setInterval(() => {
-				updateElapsedTime();
+				dispatch(updateElapsedTime());
 			}, 1000);
 		}
 
@@ -30,9 +29,9 @@ const StatusContainer = ({
 
 	const getResultEmoji = useCallback((gameState) => {
 		switch (gameState) {
-			case 'win':
+			case GAME.WIN:
 				return '😎';
-			case 'lose':
+			case GAME.LOSE:
 				return '😢';
 			default:
 				return '😄';
@@ -40,11 +39,11 @@ const StatusContainer = ({
 	}, [gameState]);
 
 	const onClickRestart = useCallback(() => {
-		restartGame();
+		dispatch(restartGame());
 	}, []);
 
 	const onClickSettings = useCallback(() => {
-		showSettings();
+		dispatch(showSettings());
 	}, []);
 
 	return (
@@ -54,7 +53,7 @@ const StatusContainer = ({
 				leftMineCount={mineCount - flagCount}
 				mineCount={mineCount}
 				resultEmoji={getResultEmoji(gameState)}
-				enableSettings={gameState !== 'run'}
+				enableSettings={gameState !== GAME.RUN}
 				elapsedTime={elapsedTime.toString().padStart(3, '0')}
 				onClickRestart={onClickRestart}
 				onClickSettings={onClickSettings}
@@ -63,22 +62,4 @@ const StatusContainer = ({
 	);
 };
 
-const mapStateToProps = (rootState) => ({
-	enableSettings: rootState.control.enableSettings,
-	gameState: rootState.control.gameState,
-	enableTimer: rootState.control.enableTimer,
-	elapsedTime: rootState.control.elapsedTime,
-	mineCount: rootState.control.mineCount,
-	flagCount: rootState.control.flagCount
-});
-
-const mapDispatchToProps = (dispatch) => ({
-	showSettings: () => dispatch(showSettings()),
-	restartGame: () => dispatch(restartGame()),
-	updateElapsedTime: () => dispatch(updateElapsedTime())
-});
-
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(StatusContainer);
+export default StatusContainer;
