@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const DEBUG = process.env.NODE_ENV === 'development';
-const ASSETS_PATH = '/assets/scripts';
+const ASSETS_PATH = './';
 
 module.exports = {
 	mode: process.env.NODE_ENV,
